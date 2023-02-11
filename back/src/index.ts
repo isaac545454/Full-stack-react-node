@@ -1,3 +1,6 @@
 import Express from "express";
+const app = Express();
 
-console.log("aaa");
+app.listen(3000, () => {
+  console.log("Server rodando porta 3000");
+});
