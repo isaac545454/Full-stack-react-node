@@ -1,4 +1,4 @@
-const taskModel = require("../Model/TaskModal");
+import taskModel from "../Model/TaskModal";
 import { Request, Response } from "express";
 
 class TaskController {
@@ -6,7 +6,7 @@ class TaskController {
     const task = new taskModel(req.body);
     await task
       .save()
-      .then((response: Response) => {
+      .then((response) => {
         return res.status(201).json(response);
       })
       .catch((error: Error) => {
