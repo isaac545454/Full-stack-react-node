@@ -1,6 +1,8 @@
+require("dotenv").config();
 import Express from "express";
 const app = Express();
-require("dotenv").config();
+
+app.use(Express.json());
 
 require("./config/db");
 app.listen(3000, () => {
