@@ -1,7 +1,8 @@
 import taskModel from "../Model/TaskModal";
-import { Request, Response } from "express";
+import { Request, response, Response } from "express";
 import { doesNotMatch } from "assert";
 
+const current = new Date();
 class TaskController {
   async create(req: Request, res: Response) {
     const task = new taskModel(req.body);
@@ -73,6 +74,21 @@ class TaskController {
         { done: req.params.done },
         { new: true }
       )
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch((err) => {
+        return res.status(500).json(err);
+      });
+  }
+
+  async late(req: Request, res: Response) {
+    await taskModel
+      .find({
+        when: { $lt: current },
+        macaddress: { $in: req.body.macaddress },
+      })
+      .sort("when")
       .then((response) => {
         return res.status(200).json(response);
       })
