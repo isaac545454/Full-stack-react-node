@@ -12,5 +12,6 @@ router.get("/:id", TaskController.findOne);
 router.delete("/:id", TaskController.delete);
 router.put("/:id/:done", TaskController.done);
 router.get("/filter/late", macadrresValidation, TaskController.late);
+router.get("/filter/today", macadrresValidation, TaskController.today);
 
 export default router;

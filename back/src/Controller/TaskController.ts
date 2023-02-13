@@ -1,6 +1,6 @@
 import taskModel from "../Model/TaskModal";
 import { Request, response, Response } from "express";
-import { doesNotMatch } from "assert";
+import { startOfDay, endOfDay } from "date-fns";
 
 const current = new Date();
 class TaskController {
@@ -87,6 +87,21 @@ class TaskController {
       .find({
         when: { $lt: current },
         macaddress: { $in: req.body.macaddress },
+      })
+      .sort("when")
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch((err) => {
+        return res.status(500).json(err);
+      });
+  }
+
+  async today(req: Request, res: Response) {
+    await taskModel
+      .find({
+        macaddress: { $in: req.body.macaddress },
+        when: { $gte: startOfDay(current), $lte: endOfDay(current) },
       })
       .sort("when")
       .then((response) => {
