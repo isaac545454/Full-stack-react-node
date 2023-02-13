@@ -1,4 +1,3 @@
-import { NextFunction } from "connect";
 import { Router } from "express";
 import TaskController from "../Controller/TaskController";
 import macadrresValidation from "../middlewares/macadrresValidation";
@@ -15,5 +14,6 @@ router.get("/filter/late", macadrresValidation, TaskController.late);
 router.get("/filter/today", macadrresValidation, TaskController.today);
 router.get("/filter/week", macadrresValidation, TaskController.week);
 router.get("/filter/month", macadrresValidation, TaskController.month);
+router.get("/filter/years", macadrresValidation, TaskController.years);
 
 export default router;
