@@ -1,5 +1,6 @@
 import taskModel from "../Model/TaskModal";
 import { Request, Response } from "express";
+import { doesNotMatch } from "assert";
 
 class TaskController {
   async create(req: Request, res: Response) {
@@ -27,6 +28,17 @@ class TaskController {
       });
   }
 
+  async delete(req: Request, res: Response) {
+    await taskModel
+      .deleteOne({ _id: req.params.id })
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch((err) => {
+        return res.status(500).json(err);
+      });
+  }
+
   async All(req: Request, res: Response) {
     await taskModel
       .find({ macaddress: { $in: req.body.macaddress } })
@@ -48,6 +60,21 @@ class TaskController {
         } else {
           return res.status(404).json({ error: "Tarefa não Encontrada" });
         }
+      })
+      .catch((err) => {
+        return res.status(500).json(err);
+      });
+  }
+
+  async done(req: Request, res: Response) {
+    await taskModel
+      .findByIdAndUpdate(
+        { _id: req.params.id },
+        { done: req.params.done },
+        { new: true }
+      )
+      .then((response) => {
+        return res.status(200).json(response);
       })
       .catch((err) => {
         return res.status(500).json(err);
