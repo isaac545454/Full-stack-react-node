@@ -13,6 +13,18 @@ class TaskController {
         return res.status(500).json(error);
       });
   }
+  async update(req: Request, res: Response) {
+    await taskModel
+      .findByIdAndUpdate({ _id: req.params.id }, req.body, {
+        new: true,
+      })
+      .then((response) => {
+        return res.status(200).json(response);
+      })
+      .catch((err: Error) => {
+        return res.status(500).json(err);
+      });
+  }
 }
 
 export default new TaskController();

@@ -5,5 +5,6 @@ import taskValition from "../middlewares/TaskValidation";
 const router = Router();
 
 router.post("/", taskValition, TaskController.create);
+router.put("/:id", taskValition, TaskController.update);
 
 export default router;

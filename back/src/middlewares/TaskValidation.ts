@@ -25,15 +25,23 @@ const taskValition = async (
 
   let exists;
 
-  exists = await TaskModel.findOne({
-    when: { $eq: new Date(when) },
-    macaddress: { $in: macaddress },
-  });
-
-  if (exists)
+  if (req.params.id) {
+    exists = await TaskModel.findOne({
+      when: { $eq: new Date(when) },
+      macaddress: { $in: macaddress },
+      _id: { $ne: req.params.id },
+    });
+  } else {
+    exists = await TaskModel.findOne({
+      when: { $eq: new Date(when) },
+      macaddress: { $in: macaddress },
+    });
+  }
+  if (exists) {
     return res
       .status(400)
       .json({ error: "já existe tarefa para esse horario" });
+  }
 
   next();
 };
