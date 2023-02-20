@@ -19,8 +19,6 @@ const taskValition = async (
 
   if (!macaddress || !type || !title || !description || !when) {
     return res.status(400).json({ error: "preencha todos os campos" });
-  } else if (isPast(new Date(when))) {
-    return res.status(400).json({ error: "Escolha uma Data no futuro" });
   }
 
   let exists;
@@ -32,6 +30,10 @@ const taskValition = async (
       _id: { $ne: req.params.id },
     });
   } else {
+    if (isPast(new Date(when))) {
+      return res.status(400).json({ error: "Escolha uma Data no futuro" });
+    }
+
     exists = await TaskModel.findOne({
       when: { $eq: new Date(when) },
       macaddress: { $in: macaddress },
