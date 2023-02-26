@@ -91,4 +91,20 @@ Mobile:
 <li>
 => expo-network
 </li>
+<h2>Funcionalidades: </h2>
+<li>
+ => CRUD de tarefas 
+</li>
+<li>
+ => filtro de tarefas (em atrasado, dia, semana, mês, ano)
+</li>
+<li>
+=> sicronização de tarefas Mobile Web
+</li>
+
+
+ 
 </ul>
+
+
+
